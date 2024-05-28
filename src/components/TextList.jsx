@@ -1,9 +1,8 @@
-// TextList.js
 import React from "react";
-import { useTextContext } from "../context/TextContext";
+import { useSelector } from "react-redux";
 
 export default function TextList() {
-  const { texts } = useTextContext();
+  const texts = useSelector((state) => state.textReducer.texts);
 
   return (
     <ul>

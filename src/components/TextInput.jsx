@@ -1,9 +1,9 @@
-// TextInput.js
 import React, { useState } from "react";
-import { useTextContext } from "../context/TextContext";
+import { useDispatch } from "react-redux";
+import { addTextAction } from "../redux/config/modules/addTextAction";
 
 function TextInput() {
-  const { onAddText } =  useTextContext();
+  const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
 
   const handleChange = (e) => {
@@ -13,8 +13,8 @@ function TextInput() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputValue.trim()) {
-      onAddText(inputValue);
-      setInputValue("");
+      dispatch(addTextAction(inputValue)); 
+      setInputValue('');
     }
   };
 
