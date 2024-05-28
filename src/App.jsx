@@ -1,11 +1,17 @@
 // App.jsx
-import React from "react";
-import TextInput from "./components/TextInput";
-import TextList from "./components/TextList";
-import { Provider } from "react-redux";
-import store from "./redux/config/configStore";
+
+import React, { useEffect } from 'react';
+import TextInput from './components/TextInput';
+import TextList from './components/TextList';
+import { Provider } from 'react-redux';
+import store from './redux/config/configStore';
+import { initTexts } from './redux/config/modules/action';
 
 function App() {
+  useEffect(() => {
+    store.dispatch(initTexts());
+  }, []);
+
   return (
     <Provider store={store}>
       <div>

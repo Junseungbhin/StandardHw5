@@ -1,16 +1,37 @@
-export const ADD_TEXT = "ADD_TEXT";
+// actions.js
 
-export const addText = (text) => (dispatch) => {
-  dispatch({
-    type: ADD_TEXT,
-    payload: text,
-  });
-  updateLocalStorage(text);
+export const ADD_TEXT = 'ADD_TEXT';
+export const INIT_TEXTS = 'INIT_TEXTS';
+
+export const addText = (text) => {
+  return (dispatch, getState) => {
+    const { textReducer } = getState(); 
+    const storedTexts = textReducer.texts; 
+
+    if (!storedTexts.includes(text)) { 
+      dispatch({
+        type: ADD_TEXT,
+        payload: text,
+      });
+      
+      const updatedTexts = [...storedTexts, text]; 
+      updateLocalStorage(updatedTexts);
+    }
+  };
 };
 
-// 로컬 스토리지 업데이트 함수
-const updateLocalStorage = (text) => {
-  const storedTexts = JSON.parse(localStorage.getItem("texts")) || [];
-  const updatedTexts = [...storedTexts, text];
-  localStorage.setItem("texts", JSON.stringify(updatedTexts));
+export const initTexts = () => {
+  return {
+    type: INIT_TEXTS,
+    payload: getStoredTexts(),
+  };
+};
+
+const updateLocalStorage = (texts) => {
+  localStorage.setItem('texts', JSON.stringify(texts));
+};
+
+const getStoredTexts = () => {
+  const storedTexts = localStorage.getItem('texts');
+  return storedTexts ? JSON.parse(storedTexts) : [];
 };

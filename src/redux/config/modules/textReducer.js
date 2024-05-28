@@ -1,15 +1,9 @@
-import { ADD_TEXT } from "./action";
+// reducers.js
 
-export const addTextAsync = (text) => {
-  return (dispatch) => {
-    setTimeout(() => {
-      dispatch(addText(text));
-    }, 1000); 
-  };
-};
+import { ADD_TEXT, INIT_TEXTS } from "./action";
 
 const initialState = {
-  texts: []
+  texts: [],
 };
 
 const textReducer = (state = initialState, action) => {
@@ -17,7 +11,12 @@ const textReducer = (state = initialState, action) => {
     case ADD_TEXT:
       return {
         ...state,
-        texts: [...state.texts, action.payload]
+        texts: [...state.texts, action.payload],
+      };
+    case INIT_TEXTS:
+      return {
+        ...state,
+        texts: action.payload,
       };
     default:
       return state;
